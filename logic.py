@@ -86,15 +86,13 @@ def subtraction_int(a, b):
     return (normalise_int( ( addition_whole(a_pos, b_neg), addition_whole(a_neg, b_pos))))
 
 def multiplication_int(a, b):
-    a = normalise_int(a)
-    b = normalise_int(b)
     a_pos, a_neg = a
     b_pos, b_neg = b
 
     if (a_pos == () and a_neg == ()) or (b_pos == () and b_neg == ()):
         return ((), ())
 
-    if a_pos == () ^ b_pos == ():
+    if (a_pos == ()) ^ (b_pos == ()):
         negative = True
     else:
         negative = False
@@ -113,6 +111,57 @@ def multiplication_int(a, b):
     return (c, ())
 
 def division_int(a, b):
-    pass
+    a_pos, a_neg = a
+    b_pos, b_neg = b
 
-prin()
+    if b == ((), ()):
+        raise ZeroDivisionError
+    
+    if a == ((), ()):
+        return ((), ())
+    
+    if (a_pos == ()) and (b_pos == ()):
+        negative = False
+        a = tuple(reversed(a))
+        b = tuple(reversed(b))
+    elif a_pos == ():
+        negative = True
+        a = tuple(reversed(a))
+    elif b_pos == ():
+        negative = True
+        b = tuple(reversed(b))
+    else:
+        negative = False
+    
+    c = ((), ())
+    d = ((), ())
+
+    while greater_int(a, multiplication_int(b, d)):
+        c = d
+        d = addition_int(d, ( ((),) , ()))
+
+    if multiplication_int(b, d) == a:
+        answer = d
+    else:
+        answer = c
+    
+    if negative:
+        return tuple(reversed(answer))
+    
+    return normalise_int(answer)
+
+def greater_int(a, b):
+    a = normalise_int(a)
+    b = normalise_int(b)
+
+    c = subtraction_int(a, b)
+
+    if c == ((), ()):
+        return False
+    
+    c_pos, c_neg = c
+
+    if c_pos == ():
+        return False
+    
+    return True

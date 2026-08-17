@@ -57,3 +57,4 @@ def readable_peano_rational(a):
 
     print(f"{c} / {n}")
     return ( readable_peano_int(c), readable_peano_int(n))
+print(peano_readable_int(logic.division_int( readable_peano_int(-5), readable_peano_int(2))))
