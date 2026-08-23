@@ -193,3 +193,11 @@ def addition_rational(a, b):
     c_denominator = multiplication_int(a_denominator, b_denominator)
     c_numerator = addition_int(multiplication_int(a_numerator, b_denominator), multiplication_int(b_numerator, a_denominator))
     return normalise_rational((c_numerator, c_denominator))
+
+def subtraction_rational(a, b):
+    a_numerator, a_denominator = a
+    b_numerator, b_denominator = b
+
+    c_denominator = multiplication_int(a_denominator, b_denominator)
+    c_numerator = subtraction_int(multiplication_int(a_numerator, b_denominator), multiplication_int(b_numerator, a_denominator))
+    return normalise_rational((c_numerator, c_denominator))
