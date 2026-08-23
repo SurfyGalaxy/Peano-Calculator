@@ -58,4 +58,4 @@ def readable_peano_rational(a):
     return ( readable_peano_int(c), readable_peano_int(n))
 
 
-print(peano_readable_rational(logic.subtraction_rational(readable_peano_rational(1.5), readable_peano_rational(0.5))))
+print(peano_readable_rational(logic.division_rational(readable_peano_rational(1), readable_peano_rational(0.5))))
