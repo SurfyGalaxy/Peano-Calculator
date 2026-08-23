@@ -165,3 +165,21 @@ def greater_int(a, b):
         return False
     
     return True
+
+def modulo_int(a, b):
+    return subtraction_int(a, multiplication_int(b, division_int(a, b)))
+
+def gcd_int(a, b):
+    while greater_int(b, ((), ())):
+        c = modulo_int(a, b)
+        a = b
+        b = c
+    return a
+
+def normalise_rational(a):
+    a_denominator, a_numerator = a
+    gcd = gcd_int(a_denominator, a_numerator)
+    a_denominator = division_int(a_denominator, gcd)
+    a_numerator = division_int(a_numerator, gcd)
+    return (a_denominator, a_numerator)
+
