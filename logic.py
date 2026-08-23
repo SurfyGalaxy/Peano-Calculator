@@ -176,6 +176,9 @@ def gcd_int(a, b):
         b = c
     return a
 
+def lcm_int(a, b):
+    return division_int(multiplication_int(a, b), gcd_int(a, b))
+
 def normalise_rational(a):
     a_denominator, a_numerator = a
     gcd = gcd_int(a_denominator, a_numerator)
@@ -183,3 +186,10 @@ def normalise_rational(a):
     a_numerator = division_int(a_numerator, gcd)
     return (a_denominator, a_numerator)
 
+def addition_rational(a, b):
+    a_numerator, a_denominator = a
+    b_numerator, b_denominator = b
+
+    c_denominator = multiplication_int(a_denominator, b_denominator)
+    c_numerator = addition_int(multiplication_int(a_numerator, b_denominator), multiplication_int(b_numerator, a_denominator))
+    return normalise_rational((c_numerator, c_denominator))

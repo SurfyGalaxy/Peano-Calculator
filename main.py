@@ -55,7 +55,7 @@ def readable_peano_rational(a):
     c = int(c / d)
     n = int(n / d)
 
-    print(f"{c} / {n}")
     return ( readable_peano_int(c), readable_peano_int(n))
 
-print(logic.normalise_rational ((readable_peano_int(-4), readable_peano_int(-2))))
+
+print(peano_readable_rational(logic.addition_rational(readable_peano_rational(1.5), readable_peano_rational(0.5))))
