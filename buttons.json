@@ -12,13 +12,116 @@
     "multiplication": {
         "text": "x",
         "col": 2,
-        "row": 2,
-        "func": "*"
+        "row": 2
     },
     "division": {
         "text": "÷",
         "col": 3,
-        "row": 2,
-        "func": "/"
+        "row": 2
+    },
+    "clear": {
+        "text": "AC",
+        "col": 4,
+        "row": 2
+    },
+    "seven": {
+        "text": "7",
+        "col": 0,
+        "row": 3
+    },
+    "eight": {
+        "text": "8",
+        "col": 1,
+        "row": 3
+    },
+    "nine": {
+        "text": "9",
+        "col": 2,
+        "row": 3
+    },
+    "right_bracket": {
+        "text": "(",
+        "col": 3,
+        "row": 3
+    },
+    "left_bracket": {
+        "text": ")",
+        "col": 4,
+        "row": 3
+    },
+    "four": {
+        "text": "4",
+        "col": 0,
+        "row": 4
+    },
+    "five": {
+        "text": "5",
+        "col": 1,
+        "row": 4
+    },
+    "six": {
+        "text": "6",
+        "col": 2,
+        "row": 4
+    },
+    "add_memory": {
+        "text": "M+",
+        "col": 3,
+        "row": 4
+    },
+    "minus_memory": {
+        "text": "M-",
+        "col": 4,
+        "row": 4
+    },
+    "one": {
+        "text": "1",
+        "col": 0,
+        "row": 5
+    },
+    "two": {
+        "text": "2",
+        "col": 1,
+        "row": 5
+    },
+    "three": {
+        "text": "3",
+        "col": 2,
+        "row": 5
+    },
+    "recall_memory": {
+        "text": "MR",
+        "col": 3,
+        "row": 5
+    },
+    "save_memory": {
+        "text": "MS",
+        "col": 4,
+        "row": 5
+    },
+    "zero": {
+        "text": "0",
+        "col": 0,
+        "row": 6
+    },
+    "decimal": {
+        "text": ".",
+        "col": 1,
+        "row": 6
+    },
+    "ans": {
+        "text": "ans",
+        "col": 2,
+        "row": 6
+    },
+    "backspace": {
+        "text": "C",
+        "col": 3,
+        "row": 6
+    },
+    "eval": {
+        "text": "=",
+        "col": 4,
+        "row": 6
     }
 }
