@@ -3,8 +3,10 @@ import helper
 import tkinter as tk
 import tkinter.font as tkfont
 import json
+from pathlib import Path
+import random
 
-import playsound3 as ps
+from playsound3 import playsound 
 
 root = tk.Tk()
 root.title("Peano Calculator")
@@ -48,7 +50,7 @@ class Calculator:
     def inputs(self, value):
         if value in {"<-", "->", "AC", "C", "M+", "M-", "MR", "MS", ":3c"}:
             if value == ":3c":
-                play_cats()
+                self.play_cats()
         
         else:
             self.string = self.string + value
@@ -58,6 +60,14 @@ class Calculator:
                 self.display = "<" + self.string[-len(self.original):]
         print(self.string)
         self.main()
+    
+    def play_cats(self):
+        files = [f for f in Path("./cats").iterdir()]
+        if not files:
+            print("No cats found :(")
+            return
+        file = random.choice(files)
+        playsound("./" + file, False)
 
 calc = Calculator()
 calc.main()
