@@ -58,11 +58,3 @@ def readable_peano_rational(a):
 
     return ( readable_peano_int(c), readable_peano_int(n))
 
-def peano_readable_real(a):
-    value, error = a
-    return str(peano_readable_rational(value)) + " +/-" + str(peano_readable_rational(error))
-
-def readable_peano_real(a):
-    return (readable_peano_rational(a), (((), ()), (((),), ())))
-
-print(peano_readable_real())

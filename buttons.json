@@ -1,0 +1,24 @@
+{
+    "addition": {
+        "text": "+",
+        "col": 0,
+        "row": 2
+    },
+    "subtraction": {
+        "text": "-",
+        "col": 1,
+        "row": 2
+    },
+    "multiplication": {
+        "text": "x",
+        "col": 2,
+        "row": 2,
+        "func": "*"
+    },
+    "division": {
+        "text": "÷",
+        "col": 3,
+        "row": 2,
+        "func": "/"
+    }
+}
