@@ -12,12 +12,15 @@ root = tk.Tk()
 root.title("Peano Calculator")
 root.geometry("500x310")
 
+
+
 class Calculator:
     def __init__(self):
         self.mode = 2 # 0 = whole, 1 = int, 2 = rational
         self.original = "               "
-        self.display = "               "
+        self.display = self.original
         self.string = ""
+        self.offset = 0
         self.display_font = tkfont.Font(family="DejaVu Sans Mono", size=40)
         for i in range(5):
             root.grid_columnconfigure(i, weight=1)
@@ -51,23 +54,51 @@ class Calculator:
         if value in {"<-", "->", "AC", "C", "M+", "M-", "MR", "MS", ":3c"}:
             if value == ":3c":
                 self.play_cats()
+            elif value == "AC":
+                self.string = ""
+                self.display = self.buffer(self.string, len(self.original))
+            elif value == "C":
+                self.string = self.string[:-1]
+                self.display = self.buffer(self.string, len(self.original))
+            elif value in {"<-", "->"}:
+                self.do_offset = True
+                if value == "->":
+                    if self.offset:
+                        self.offset -= 1
+                elif len(self.string) > len(self.original) + self.offset:
+                    self.offset += 2
+            print(self.offset)
+                    
+
+            self.main()
         
         else:
             self.string = self.string + value
-            if len(self.string) - len(self.original) < 0:
-                self.display = self.string + self.original[len(self.string):]
-            else:
-                self.display = "<" + self.string[-len(self.original):]
-        print(self.string)
-        self.main()
+            self.display = self.buffer(self.string, len(self.original))
+            self.main()
+    
+    def buffer(self, string: str, target_size: int):
+        str_size = len(string)
+        if str_size == target_size:
+            return string
+        elif str_size < target_size:
+            return string + (" " * (target_size - str_size))
+        
+        print(string, string[-(target_size - 1):], target_size)
+        trail = string[-(target_size - 1):]
+        return "<" + trail
     
     def play_cats(self):
         files = [f for f in Path("./cats").iterdir()]
         if not files:
             print("No cats found :(")
             return
+        if random.randint(0, 50) == 0:
+            for file in files:
+                playsound(Path(file), False)
+                return
         file = random.choice(files)
-        playsound("./" + file, False)
+        playsound(Path(file), False)
 
 calc = Calculator()
 calc.main()
