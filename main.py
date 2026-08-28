@@ -65,14 +65,19 @@ class Calculator:
                 if value == "->":
                     if self.offset:
                         self.offset -= 1
-                elif len(self.string) > len(self.original) + self.offset:
-                    self.offset += 2
-            print(self.offset)
+                elif len(self.string) >= len(self.original) + self.offset:
+                    self.offset += 1
+                
+                if self.offset:
+                    self.display = self.buffer(self.string[:-self.offset], len(self.original) - 1) + '>'
+                else:
+                    self.display = self.buffer(self.string, len(self.original))
                     
 
             self.main()
         
         else:
+            self.offset = 0
             self.string = self.string + value
             self.display = self.buffer(self.string, len(self.original))
             self.main()
@@ -83,8 +88,6 @@ class Calculator:
             return string
         elif str_size < target_size:
             return string + (" " * (target_size - str_size))
-        
-        print(string, string[-(target_size - 1):], target_size)
         trail = string[-(target_size - 1):]
         return "<" + trail
     
