@@ -57,4 +57,3 @@ def readable_peano_rational(a):
     n = int(n / d)
 
     return ( readable_peano_int(c), readable_peano_int(n))
-

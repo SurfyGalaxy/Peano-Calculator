@@ -21,6 +21,7 @@ class Calculator:
         self.display = self.original
         self.string = ""
         self.offset = 0
+        self.memory = (((), ()), (((),), ()))
         self.display_font = tkfont.Font(family="DejaVu Sans Mono", size=40)
         for i in range(5):
             root.grid_columnconfigure(i, weight=1)
@@ -51,7 +52,7 @@ class Calculator:
             globals()[name] = button
         
     def inputs(self, value):
-        if value in {"<-", "->", "AC", "C", "M+", "M-", "MR", "MS", ":3c"}:
+        if value in {"<-", "->", "AC", "C", "M+", "M-", "MR", "MS", ":3c", '='}:
             if value == ":3c":
                 self.play_cats()
             elif value == "AC":
@@ -72,7 +73,19 @@ class Calculator:
                     self.display = self.buffer(self.string[:-self.offset], len(self.original) - 1) + '>'
                 else:
                     self.display = self.buffer(self.string, len(self.original))
-                    
+            elif (not any(char in {"+", "-", "x", "÷", "ans", 'M'} for char in self.string)) and self.string:
+                if value == "M+":
+                    self.memory = logic.addition_rational(self.memory, helper.readable_peano_rational(float(self.string)))
+                elif value == "M-":
+                    self.memory = logic.subtraction_rational(self.memory, helper.readable_peano_rational(float(self.string)))
+                else:
+                    self.memory = helper.readable_peano_rational(float(self.string))
+                print(helper.peano_readable_rational(self.memory))
+            elif value == "MR":
+                self.string = self.string + 'M'
+                self.display = self.buffer(self.string, len(self.original))
+            elif value == '=':
+                self.evaluate(self.string)
 
             self.main()
         
