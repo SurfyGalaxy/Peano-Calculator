@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 import random
 import re
+import sys
+import os
 
 from playsound3 import playsound 
 
@@ -13,7 +15,10 @@ root = tk.Tk()
 root.title("Peano Calculator")
 root.geometry("500x310")
 
-
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 class Calculator:
     def __init__(self):
@@ -28,7 +33,7 @@ class Calculator:
         for i in range(5):
             root.grid_columnconfigure(i, weight=1)
 
-        with open("buttons.json") as f:
+        with open(resource_path("buttons.json")) as f:
             self.buttons = json.load(f)
 
     def main(self):
@@ -106,7 +111,7 @@ class Calculator:
         return "<" + trail
     
     def play_cats(self):
-        files = [f for f in Path("./cats").iterdir()]
+        files = [f for f in Path(resource_path("./cats")).iterdir()]
         if not files:
             print("No cats found :(")
             return
