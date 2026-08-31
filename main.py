@@ -5,6 +5,7 @@ import tkinter.font as tkfont
 import json
 from pathlib import Path
 import random
+import re
 
 from playsound3 import playsound 
 
@@ -22,6 +23,7 @@ class Calculator:
         self.string = ""
         self.offset = 0
         self.memory = (((), ()), (((),), ()))
+        self.ans = (((), ()), (((),), ()))
         self.display_font = tkfont.Font(family="DejaVu Sans Mono", size=40)
         for i in range(5):
             root.grid_columnconfigure(i, weight=1)
@@ -80,12 +82,11 @@ class Calculator:
                     self.memory = logic.subtraction_rational(self.memory, helper.readable_peano_rational(float(self.string)))
                 else:
                     self.memory = helper.readable_peano_rational(float(self.string))
-                print(helper.peano_readable_rational(self.memory))
             elif value == "MR":
                 self.string = self.string + 'M'
                 self.display = self.buffer(self.string, len(self.original))
             elif value == '=':
-                self.evaluate(self.string)
+                self.display = self.buffer(self.evaluate(self.string), len(self.original))
 
             self.main()
         
@@ -115,6 +116,64 @@ class Calculator:
                 return
         file = random.choice(files)
         playsound(Path(file), False)
+    
+    def evaluate(self, string):
+        expression = []
+        temp = ''
+        for char in string:
+            if char in {"+", "-", "x", "÷", 'M'}:
+                expression.append(temp)
+                expression.append(char)
+                temp = ''
+            else:
+                temp = temp + char
+        expression.append(temp)
+        
+        negate = False
+        joined_expression = []
+        for index, term in enumerate(expression):
+            temp = ''
+            if term == '-':
+                negate = True
+            else:
+                if term == "ans":
+                    temp = helper.peano_readable_rational(self.ans)
+                elif term == "M":
+                    temp = helper.peano_readable_rational(self.memory)
+                else:
+                    temp = term
+                if negate:
+                    joined_expression.append('-' + temp)
+                    negate = False
+                else:
+                    joined_expression.append(temp)
+        while '' in joined_expression:
+            joined_expression.remove('')
+        
+        while len(joined_expression) > 1:
+            print(joined_expression)
+            if '-' in joined_expression[1]:
+                value = joined_expression.pop(1)
+                joined_expression[0] = helper.peano_readable_rational(logic.addition_rational(helper.readable_peano_rational(joined_expression[0]), helper.readable_peano_rational(value)))
+            elif joined_expression[1] == "+":
+                del joined_expression[1]
+                value = joined_expression.pop(1)
+                print(joined_expression[0])
+                joined_expression[0] = helper.peano_readable_rational(logic.addition_rational(helper.readable_peano_rational(joined_expression[0]), helper.readable_peano_rational(value)))
+            elif joined_expression[1] == "x":
+                del joined_expression[1]
+                value = joined_expression.pop(1)
+                joined_expression[0] = helper.peano_readable_rational(logic.multiplication_rational(helper.readable_peano_rational(joined_expression[0]), helper.readable_peano_rational(value)))
+            elif joined_expression[1] == "÷":
+                del joined_expression[1]
+                value = joined_expression.pop(1)
+                joined_expression[0] = helper.peano_readable_rational(logic.division_rational(helper.readable_peano_rational(joined_expression[0]), helper.readable_peano_rational(value)))
+
+        
+        result = round(joined_expression[0], 8)
+        if result % 1 == 0:
+            result = int(result)
+        return str(result)
 
 calc = Calculator()
 calc.main()
